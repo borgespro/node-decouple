@@ -1,0 +1,8 @@
+{
+  "name": "node-decouple",
+  "version": "0.1.0",
+  "description": "This library intends to simplify how you manipulate your environment variables",
+  "main": "index.js",
+  "author": "Thiago Borges <thiago@borges.pro>",
+  "license": "MIT"
+}
