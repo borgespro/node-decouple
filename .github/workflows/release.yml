@@ -9,16 +9,25 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout Repo
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
 
-      - name: Use Node.js 12
+      - name: Setup Node.js 12.x
         uses: actions/setup-node@master
         with:
-          node-version: 12
-          always-auth: true
+          node-version: 12.x
+
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            email=thiago@borges.pro
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Dependencies
         run: yarn
@@ -29,10 +38,12 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: Publish to npm
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@master
         with:
           publish: yarn release
-          version: yarn version-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
