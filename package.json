@@ -18,7 +18,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "yarn build && yarn changeset publish"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
