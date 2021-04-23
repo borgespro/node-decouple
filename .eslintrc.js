@@ -10,6 +10,17 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'prettier'],
-  rules: {},
+  rules: {
+    'no-empty-function': 'off',
+    'no-useless-constructor': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+      },
+    ],
+  },
   settings: { 'import/resolver': { node: { extensions: ['.js', '.ts'] } } },
 };
