@@ -19,13 +19,12 @@
     "build": "tsc",
     "test": "jest",
     "prepare": "husky install",
-    "release": "yarn build && yarn changeset publish"
+    "release": "yarn build && yarn changeset publish --no-verify"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "author": "Thiago Borges <thiago@borges.pro>",
