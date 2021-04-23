@@ -1,8 +1,10 @@
+import { config, DotenvConfigOptions } from 'dotenv';
+
 import { RuleConfig } from './Rule';
 
 type DecoupleConfig = {
   rules: RuleConfig[];
-  dotenvConfig: any;
+  dotenvConfig: DotenvConfigOptions;
 };
 
 class Decouple {
@@ -10,7 +12,7 @@ class Decouple {
 
   rules: RuleConfig[];
 
-  dotenv: any;
+  values = {};
 
   public static start(): Decouple {
     Decouple.instance = new Decouple();
@@ -19,8 +21,11 @@ class Decouple {
 
   public config({ rules = [], dotenvConfig }: DecoupleConfig) {
     this.rules = rules;
-    this.dotenv = dotenvConfig;
+    config(dotenvConfig);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  private loadRules(): void {}
 
   private constructor() {}
 }
