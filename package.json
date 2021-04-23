@@ -19,7 +19,7 @@
     "build": "tsc",
     "test": "jest",
     "prepare": "husky install",
-    "release": "yarn build && yarn changeset publish --no-verify"
+    "release": "yarn build && yarn changeset publish"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [

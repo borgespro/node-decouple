@@ -8,21 +8,27 @@ fi
 yarn test
 yarn lint-staged
 
-echo 'Do you want to version this update?'
-PS3='Answer: '
-options=("yes" "no")
-select opt in "${options[@]}"
-do
-    case $opt in
-        "yes")
-            npx changeset
-            git add .changeset/*
-            exit 0
-            ;;
-        "no")
-            exit 0
-            ;;
-        *) echo "invalid option $REPLY";;
-    esac
-done
+yarn add is-ci
+
+if ! [ is-ci ]; then
+  echo 'Do you want to version this update?'
+  PS3='Answer: '
+  options=("yes" "no")
+  select opt in "${options[@]}"
+  do
+      case $opt in
+          "yes")
+              npx changeset
+              git add .changeset/*
+              exit 0
+              ;;
+          "no")
+              exit 0
+              ;;
+          *) echo "invalid option $REPLY";;
+      esac
+  done
+fi
+
 exit 0
+
