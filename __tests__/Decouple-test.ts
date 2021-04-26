@@ -1,0 +1,3 @@
+describe('Decouple Rule...', () => {
+  it('', () => {});
+});

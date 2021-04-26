@@ -6,8 +6,9 @@
     "noImplicitAny": true,
     "lib": ["es2020", "es2017", "es7", "es6"],
     "outDir": "./dist",
-    "target": "ES5",
-    "moduleResolution": "node"
+    "target": "es2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true
   },
   "typedocOptions": {
     "mode": "modules",

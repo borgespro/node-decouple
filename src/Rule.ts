@@ -5,14 +5,16 @@ export type RuleConfig = {
   options?: any[];
 };
 
+const EMPTY = '';
+
 export default class Rule {
-  key: string;
+  readonly key: string;
 
-  default?: any;
+  readonly default?: any;
 
-  cast?: any = String;
+  readonly cast: any = String;
 
-  options?: any[];
+  readonly options?: any[];
 
   constructor(config: RuleConfig) {
     this.key = config.key;
@@ -24,6 +26,23 @@ export default class Rule {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  parser() {}
+  parse(): any {
+    const rawValue = process.env[this.key];
+
+    if (!rawValue && rawValue !== EMPTY) {
+      return this.default;
+    }
+
+    const value = this.cast(rawValue);
+
+    if (this.options?.includes(value)) {
+      return value;
+    }
+
+    if (this.options) {
+      return null;
+    }
+
+    return value;
+  }
 }

@@ -1,6 +1,7 @@
 import { config, DotenvConfigOptions } from 'dotenv';
+import camelCase from 'lodash.camelcase';
 
-import { RuleConfig } from './Rule';
+import Rule, { RuleConfig } from './Rule';
 
 type DecoupleConfig = {
   rules: RuleConfig[];
@@ -10,9 +11,7 @@ type DecoupleConfig = {
 class Decouple {
   private static instance: Decouple;
 
-  rules: RuleConfig[];
-
-  values = {};
+  values: any = {};
 
   public static start(): Decouple {
     Decouple.instance = new Decouple();
@@ -20,12 +19,15 @@ class Decouple {
   }
 
   public config({ rules = [], dotenvConfig }: DecoupleConfig) {
-    this.rules = rules;
     config(dotenvConfig);
+    this.loadRules(rules);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  private loadRules(): void {}
+  private loadRules(rules: RuleConfig[]): void {
+    rules.forEach((rule) => {
+      this.values[camelCase(rule.key)] = new Rule(rule).parse();
+    });
+  }
 
   private constructor() {}
 }
